@@ -14,6 +14,7 @@ from exchangelib.protocol import BaseProtocol
 from exchangelib import Credentials, Account, DELEGATE, Configuration, FileAttachment
 import requests
 from bs4 import BeautifulSoup, BeautifulStoneSoup
+from robot.api import logger
 
 jsonpath=r"C:\Users\USSACDev\Desktop\anuraj\monitorMailbox\itsmworkloginputs.json"
 passwordUpdate='''"C:\Program Files (x86)\CyberArk\ApplicationPasswordSdk\CLIPasswordSDK.exe>" GetPassword /p AppDescs.AppID=APP_ADOE-CAC /p Query="Safe=WW-TTS-EES-AUTOCNTR-AD;Folder=Root;Object=mmm.com_{userid}" /o Password'''
@@ -162,14 +163,17 @@ def postconnect():
             response_worklog = requests.post(url, proxies=proxies, auth=(username, password), data=body_worklog,headers={"Connection": "close"})
             print("worklogUpdate_status_code===",response_worklog.status_code)
         elif int(statusnum) in [5] and "ClosureCode" in mailbody:
+            #logger.debug("!!!!!!!!!!!!!!! "+str(statusnum)+"mailbody:"+str(mailbody))
+            print("!!!!!!!!!!!!!!! "+str(statusnum)+"mailbody:"+str(mailbody))
             ClosureCode=mailbody[mailbody.index("ClosureCode:")+len("ClosureCode:"):mailbody.index("Solution:")].strip()#{[(Assignee_ID:ac5qzz ClosureCode:let it be Solution:give solution)]}
             Solution=mailbody[mailbody.index("Solution:")+len("Solution:"):mailbody.index(")]}")].strip()
             url = os.path.join(str(host), 'SM/9/rest/' + str(table) + '/' + str(ID) + '?view=expand')
             data_closeIncident = {'Incident': {'ClosureCode': ClosureCode, 'Solution': Solution}}
             body_closeIncident = json.dumps(data_closeIncident)
-            response_closeIncident = requests.post(url, proxies=proxies, auth=(username, password),data=body_closeIncident, headers={"Connection": "close"})
+            #response_closeIncident = requests.post(url, proxies=proxies, auth=(username, password),data=body_closeIncident, headers={"Connection": "close"})
+            response_closeIncident = requests.put(url, proxies=proxies, auth=(username, password),data=body_closeIncident, headers={"Connection": "close"})#,"Content-Type": "application/json"})
             print("CloseIncident_status_code===", response_closeIncident.status_code)
-            print(url,data_closeIncident)
+            print(str(response_closeIncident.json()['Messages']))
 
 postconnect()
 #print(mailCollections)
