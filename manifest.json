@@ -1,0 +1,25 @@
+{
+  "packname": "automationcenter_itsm_o365_worklog_update",
+  "version": "1.0",
+  "usagetype": "2",
+  "source": "1",
+  "workflows": [
+    {
+      "name": "automationcenter_itsm_o365_worklog_update.monitormail_update_worklog",
+      "filename": "automationcenter_itsm_o365_worklog_update\\monitormail_update_worklog.robot",
+      "hash": "C517FB77E4B79551478B7670A1F19336845B076552D07C2B99B48EF53BF6AB8A"
+    }
+  ],
+  "scripts": [
+    {
+      "name": "custom_library",
+      "filename": "automationcenter_itsm_o365_worklog_update\\lib\\custom_library.py",
+      "hash": "26881FB203D7F160EBFA3AC0F91EA107E26EB36226F3B1F19B66A62B10F2B0BC"
+    },
+    {
+      "name": "monitormail_update_itsm",
+      "filename": "automationcenter_itsm_o365_worklog_update\\lib\\monitormail_update_itsm.py",
+      "hash": "2A09026B4796753AAF2BF4806025AF4DF4F633662FB2395708BE43C5C69B69F2"
+    }
+  ]
+}
