@@ -164,9 +164,9 @@ def postconnect():
                 print("StatusChange_status_code===", response_status.status_code)
             elif int(statusnum) in [0]:
                 url = os.path.join(str(host), 'SM/9/rest/' + str(table) + '/' + str(ID) + '?view=expand')
-                data = {'Incident': {"JournalUpdates": mailbody, "Type": "Communication with customer"}}
+                data = {'Incident': {"JournalUpdates": mailbody+"\n"+"From: "+From, "Type": "Communication with customer"}}
                 body_worklog = json.dumps(data)
-                response_worklog = requests.post(url, proxies=proxies, auth=(username, password), data=body_worklog+"\n"+"From: "+From,headers={"Connection": "close"})
+                response_worklog = requests.post(url, proxies=proxies, auth=(username, password), data=body_worklog,headers={"Connection": "close"})
                 print("worklogUpdate_status_code===",response_worklog.status_code)
             elif int(statusnum) in [5] and "ClosureCode" in mailbody:
                 #logger.debug("!!!!!!!!!!!!!!! "+str(statusnum)+"mailbody:"+str(mailbody))
